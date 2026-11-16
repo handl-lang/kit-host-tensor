@@ -12,7 +12,7 @@ tensor terms, Python numbers for ``Const`` leaves, tuples for
 multi-output terms.  Attr spellings follow the torch adapter's
 convention — canonical names first, ``argN`` positional-attr
 fallbacks where the op's ``ATTR_SCHEMA``/hand-minted terms produce
-them (see ``mlopt_torch.torch_bindings.attr_of``).
+them (see ``kit_torch.torch_bindings.attr_of``).
 
 Two result shapes exist:
 

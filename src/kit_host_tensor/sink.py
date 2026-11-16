@@ -9,7 +9,7 @@ HostTensorExecutor`, and verifies two lowered programs against each
 other in its own runtime (the Rust op registry + NumPy).
 
 What this module does *not* do is as important as what it does.  It
-imports no torch, no ``mlopt_torch``, no ``mlopt_orchestrator``: the
+imports no torch, no ``kit_torch``, no ``mlopt_orchestrator``: the
 host-tensor backend is a peer, not a layer.  ``supported_ops`` is the
 extraction bound — ``mlopt_core.cost.backend_cost`` prices any member
 using an op outside it at ``+inf`` — and :meth:`lower` declines

@@ -3,7 +3,7 @@
 ``Sink.verify`` runs a reference and an optimized executable in *the
 sink's* runtime; for the host-tensor sink that runtime is the Rust op
 registry and the comparison is NumPy — the same metric
-``kit_onnx.report`` / ``mlopt_torch.report`` use
+``kit_onnx.report`` / ``kit_torch.report`` use
 (``max_rel = max|ref - out| / (max|ref| + 1e-8)``,
 ``passed = max_rel < rtol`` plus an optional ``max_abs <= atol``), so
 a delivery gate means the same thing whichever backend lowered it.
@@ -66,7 +66,7 @@ def verify_equiv(
 ) -> HostTensorVerifyReport:
     """Compare two already-computed host-tensor outputs.
 
-    Gate semantics mirror ``mlopt_torch.report.verify_equiv`` (not
+    Gate semantics mirror ``kit_torch.report.verify_equiv`` (not
     ``numpy.allclose``'s elementwise ``atol + rtol * |ref|``):
 
     * ``max_rel = max|ref - out| / (max|ref| + 1e-8)``
