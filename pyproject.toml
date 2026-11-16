@@ -70,14 +70,14 @@ branch = true
 omit = ["*/tests/*"]
 
 [tool.coverage.report]
-# Phase-1 measurement (P3 Step D-1f): measured on the carved suite —
-# see the split commit message.  The PyO3-extension paths skip
-# cleanly when the .so is absent, so the floor reflects the
-# extension-free surface (wire codec, bindings table, surface
-# artifact, error paths); graphopt's suite exercises the executor
-# paths through the git dep.  Ratchet convention: tighten, never
-# lower.
-fail_under = 0
+# Phase-1 measurement (P3 Step D-1f): 32% total branch coverage on
+# the carved suite *without* the PyO3 extension or host-tensor
+# checkout (the CI condition — extension/surface tests skip); 69%
+# on a dev host with the sibling `../host-tensor` build present.
+# The floor is the CI number so `ci.sh` holds everywhere; graphopt's
+# suite exercises the executor paths through the git dep.  Ratchet
+# convention: tighten, never lower.
+fail_under = 32
 show_missing = true
 exclude_also = [
     "if __name__ == ['\"]__main__['\"]:",

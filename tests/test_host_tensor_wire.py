@@ -14,6 +14,7 @@ import warnings
 
 import numpy as np
 import pytest
+
 from kit_host_tensor.errors import HostTensorError
 from kit_host_tensor.wire import (
     NONFINITE_TAG,
@@ -108,7 +109,9 @@ def _bin_rec(shape: list[int], dtype: str, payload: bytes) -> dict:
         WIRE_TAG: {
             "shape": shape,
             "data": {
-                TENSOR_BIN_TAG: base64.b64encode(payload).decode("ascii")
+                TENSOR_BIN_TAG: base64.b64encode(payload).decode(
+                    "ascii"
+                )
             },
             "dtype": dtype,
         }

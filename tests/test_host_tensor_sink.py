@@ -15,6 +15,7 @@ import numpy as np
 import pytest
 from mlopt_core.ir import IR, Const, Op, Param, TensorType, Var
 from mlopt_core.ports import Executor, Sink, VerifyResult
+
 from kit_host_tensor import HostTensorSink, _binding
 from kit_host_tensor.errors import (
     HostTensorError,
