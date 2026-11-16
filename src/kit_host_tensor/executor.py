@@ -14,7 +14,7 @@ and the IR-internal ``pack`` pairing (multi-output roots — it is *not*
 a host op and not in ``supported_ops``; the evaluator expands it
 directly).  Anything else — an op outside the table, a ``getitem``
 consumer of a tuple-valued op — raises
-:class:`~mlopt_host_tensor.errors.UnsupportedHostOpError` loudly.
+:class:`~kit_host_tensor.errors.UnsupportedHostOpError` loudly.
 """
 
 from __future__ import annotations
@@ -23,13 +23,13 @@ from typing import Any
 
 from mlopt_core.ir import Const, Op, Param, Var
 
-from mlopt_host_tensor import _binding
-from mlopt_host_tensor.bindings import HOST_BINDINGS, _Indexed
-from mlopt_host_tensor.errors import (
+from kit_host_tensor import _binding
+from kit_host_tensor.bindings import HOST_BINDINGS, _Indexed
+from kit_host_tensor.errors import (
     HostTensorError,
     UnsupportedHostOpError,
 )
-from mlopt_host_tensor.wire import decode_result
+from kit_host_tensor.wire import decode_result
 
 __all__ = ["HostTensorExecutor"]
 

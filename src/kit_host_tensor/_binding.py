@@ -2,16 +2,16 @@
 
 Resolution order:
 
-1. ``$MLOPT_HOST_TENSOR_LIB`` — explicit path to the ``.so`` (highest
+1. ``$KIT_HOST_TENSOR_LIB`` — explicit path to the ``.so`` (highest
    priority: pins the binding for a run).
 2. ``import handl_host_tensor`` — a normally-installed wheel
    (``pip install`` of the host-tensor repo's maturin build) or any
    ``.so`` already on ``sys.path``.
 3. The sibling-checkout convention: ``<repo>/../host-tensor/target/
    {release,debug}/handl_host_tensor.so`` — the dev layout this repo
-   assumes (graphopt and host-tensor are siblings under
-   ``handl-lang/``).  ``$MLOPT_HOST_TENSOR_REPO`` overrides the
-   host-tensor checkout path; ``$MLOPT_HOST_TENSOR_TARGET`` overrides
+   assumes (kit-host-tensor and host-tensor are siblings under
+   ``handl-lang/``).  ``$KIT_HOST_TENSOR_REPO`` overrides the
+   host-tensor checkout path; ``$KIT_HOST_TENSOR_TARGET`` overrides
    the cargo profile dir name.
 
 Every failure raises :class:`HostTensorError` with the build command —
@@ -28,28 +28,28 @@ from pathlib import Path
 from types import ModuleType
 from typing import Any
 
-from mlopt_host_tensor.errors import HostTensorError
+from kit_host_tensor.errors import HostTensorError
 
 _BUILD_HINT = (
     "build the binding: cd <host-tensor checkout> && "
     "maturin build (or cargo build --features python, then copy "
     "target/<profile>/libhandl_host_tensor.so to "
-    "handl_host_tensor.so; or set MLOPT_HOST_TENSOR_LIB)"
+    "handl_host_tensor.so; or set KIT_HOST_TENSOR_LIB)"
 )
 
-#: ``packages/mlopt-host-tensor/src/mlopt_host_tensor/_binding.py`` →
-#: graphopt repo root is four parents up.
-_REPO_ROOT = Path(__file__).resolve().parents[4]
+#: ``src/kit_host_tensor/_binding.py`` → kit-host-tensor repo root is
+#: two parents up (``parents[2]``); ``.parent`` is ``handl-lang/``.
+_REPO_ROOT = Path(__file__).resolve().parents[2]
 
 
 def _candidate_paths() -> list[Path]:
     """Return the sibling-checkout .so locations to try, in order."""
     repo = Path(
         os.environ.get(
-            "MLOPT_HOST_TENSOR_REPO", _REPO_ROOT.parent / "host-tensor"
+            "KIT_HOST_TENSOR_REPO", _REPO_ROOT.parent / "host-tensor"
         )
     )
-    profile = os.environ.get("MLOPT_HOST_TENSOR_TARGET", "debug")
+    profile = os.environ.get("KIT_HOST_TENSOR_TARGET", "debug")
     target = repo / "target" / profile
     return [
         target / "handl_host_tensor.so",
@@ -79,7 +79,7 @@ def load() -> ModuleType:
     Raises :class:`HostTensorError` listing what was tried when no
     candidate resolves.
     """
-    env = os.environ.get("MLOPT_HOST_TENSOR_LIB")
+    env = os.environ.get("KIT_HOST_TENSOR_LIB")
     if env:
         path = Path(env)
         try:

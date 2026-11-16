@@ -1,6 +1,6 @@
 """The host ``tensor.*`` op surface — one generated artifact, three readers.
 
-``host_surface.json`` (this package's data file) is the graphopt-side
+``host_surface.json`` (this package's data file) is the kit-side
 copy of the authoritative host-tensor surface, produced by
 ``scripts/dump_host_surface.py`` from the host-tensor checkout —
 *read-only* there:
@@ -18,7 +18,7 @@ Every entry is ``{"op": "tensor.<name>", "signature": …,
 
 * :func:`host_ops` — this package's own readers (drift guards, the
   ``hnl_import`` covered-set check);
-* ``mlopt_host_tensor.bindings.HOST_BINDINGS`` — the 138-op IR→host
+* ``kit_host_tensor.bindings.HOST_BINDINGS`` — the 138-op IR→host
   table's *target* names are validated against it (every binding key
   must be a real ``tensor.*`` op);
 * a future ``emit.py``-style renderer — the mlopt-side signature
@@ -81,7 +81,10 @@ def _find_host_tensor(explicit: str | Path | None = None) -> Path:
         else Path(
             os.environ.get(
                 "HOST_TENSOR_DIR",
-                Path(__file__).resolve().parents[5] / "host-tensor",
+                # src/kit_host_tensor/surface.py → parents[3] is
+                # handl-lang/ (kit-host-tensor and host-tensor are
+                # siblings); $HOST_TENSOR_DIR overrides.
+                Path(__file__).resolve().parents[3] / "host-tensor",
             )
         )
     )

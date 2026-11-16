@@ -4,7 +4,7 @@ Phase 1 of plan 0036 (``docs/reports/host_tensor_sink_phase0.md``):
 a *second* concrete backend behind the port the torch and ONNX
 adapters already implement.  The sink declares its op surface
 (:attr:`HostTensorSink.supported_ops` — exactly the 138 liftable-now
-ops), lowers an IR to a :class:`~mlopt_host_tensor.executor.
+ops), lowers an IR to a :class:`~kit_host_tensor.executor.
 HostTensorExecutor`, and verifies two lowered programs against each
 other in its own runtime (the Rust op registry + NumPy).
 
@@ -13,13 +13,13 @@ imports no torch, no ``mlopt_torch``, no ``mlopt_orchestrator``: the
 host-tensor backend is a peer, not a layer.  ``supported_ops`` is the
 extraction bound — ``mlopt_core.cost.backend_cost`` prices any member
 using an op outside it at ``+inf`` — and :meth:`lower` declines
-loudly (:class:`~mlopt_host_tensor.errors.UnsupportedHostOpError`)
+loudly (:class:`~kit_host_tensor.errors.UnsupportedHostOpError`)
 rather than approximating.
 
 The backend's runtime is the ``handl_host_tensor`` PyO3 extension
 built from the sibling ``handl-lang/host-tensor`` checkout
 (``cargo build --features python``); see
-:mod:`mlopt_host_tensor._binding` for how the .so is located.
+:mod:`kit_host_tensor._binding` for how the .so is located.
 """
 
 from __future__ import annotations
@@ -31,13 +31,13 @@ from mlopt_core.ir import IR
 from mlopt_core.ops import OpTable
 from mlopt_core.ports import Executor, ExecutorSpec, OpRegistry
 
-from mlopt_host_tensor.bindings import HOST_BINDINGS
-from mlopt_host_tensor.errors import (
+from kit_host_tensor.bindings import HOST_BINDINGS
+from kit_host_tensor.errors import (
     HostTensorError,
     UnsupportedHostOpError,
 )
-from mlopt_host_tensor.executor import HostTensorExecutor
-from mlopt_host_tensor.report import (
+from kit_host_tensor.executor import HostTensorExecutor
+from kit_host_tensor.report import (
     HostTensorVerifyReport,
     verify_module,
 )
@@ -102,9 +102,9 @@ class HostTensorSink:
     ) -> Executor:
         """Materialise ``ir`` as a host-tensor executor.
 
-        Raises :class:`~mlopt_host_tensor.errors.UnsupportedHostOpError`
+        Raises :class:`~kit_host_tensor.errors.UnsupportedHostOpError`
         when the program uses an op outside :attr:`supported_ops`, and
-        :class:`~mlopt_host_tensor.errors.HostTensorError` when a
+        :class:`~kit_host_tensor.errors.HostTensorError` when a
         ``Param`` leaf has no value (``params_check``).
         """
         leaves = dict(params or {})

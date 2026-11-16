@@ -36,8 +36,8 @@ from typing import Any
 
 import numpy as np
 
-from mlopt_host_tensor.errors import UnsupportedHostOpError
-from mlopt_host_tensor.wire import (
+from kit_host_tensor.errors import UnsupportedHostOpError
+from kit_host_tensor.wire import (
     scalar,
     scalar_or_tensor,
     tensor_arg,

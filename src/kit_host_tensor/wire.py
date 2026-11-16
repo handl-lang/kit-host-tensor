@@ -42,7 +42,7 @@ from typing import Any
 
 import numpy as np
 
-from mlopt_host_tensor.errors import HostTensorError
+from kit_host_tensor.errors import HostTensorError
 
 WIRE_TAG = "__tensor__"
 NONFINITE_TAG = "__nonfinite__"
