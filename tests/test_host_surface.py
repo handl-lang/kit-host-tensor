@@ -97,9 +97,11 @@ class TestBindingsDrift:
     # NOTE: graphopt's ``test_host_surface.py`` also carried
     # ``test_import_covered_ops_are_host_ops`` — the
     # ``kit_discovery.hnl_import.covered_ops`` ↔ host-surface drift
-    # check.  It stayed behind in graphopt's suite (kit-discovery is a
-    # consumer-side dep this repo must not take); re-home it with
-    # kit-discovery's own tests if desired.
+    # check.  Re-homing decision (D-1f Phase 2): it stays in
+    # graphopt's suite — no kit repo's dep closure contains both
+    # ``kit_discovery.hnl_import`` and ``kit_host_tensor.surface``
+    # (each forbids the other in its import-linter contract), and
+    # graphopt's post-Phase-3 closure has both.
 
 
 @pytest.fixture(scope="module")
