@@ -7,6 +7,7 @@ name = "kit-host-tensor"
 version = "0.1.0"
 description = "host-tensor backend for mlopt: mlopt_core.ports.Sink over the handl-lang/host-tensor f64 tensor.* op surface via its PyO3 binding. Split from handl-lang/graphopt packages/mlopt-host-tensor (P3 Step D-1f)."
 readme = "README.md"
+license = "MIT"
 requires-python = ">=3.11"
 dependencies = [
     "mlopt-core",

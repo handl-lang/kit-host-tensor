@@ -2,10 +2,7 @@
 
 The host-tensor backend for mlopt — `mlopt_core.ports.Sink` over the
 `handl-lang/host-tensor` Rust `tensor.*` op surface via its PyO3
-binding — split out of `handl-lang/graphopt`
-(`packages/mlopt-host-tensor`) in P3 Step D-1f and renamed
-`mlopt-host-tensor` → `kit-host-tensor` /
-`mlopt_host_tensor` → `kit_host_tensor`.
+binding.
 
 `kit_host_tensor.HostTensorSink` lowers the 138 liftable-now IR ops
 (elementwise / reduce-dim / linalg / shape / constructors) onto
@@ -34,7 +31,7 @@ failure raises `HostTensorError` with the build command.
 `scripts/dump_host_surface.py` against a sibling host-tensor
 checkout.
 
-## Install
+## Develop
 
 ```sh
 uv sync --group dev
@@ -53,13 +50,14 @@ git-pin the package.
 ## Verify
 
 ```sh
-.venv/bin/python -m pytest tests/ -q
-.venv/bin/ruff check src
-.venv/bin/ty check
-.venv/bin/lint-imports
-coverage run -m pytest tests/ -q && coverage report -m   # floor in pyproject
+uv run scripts/gate.py --coverage   # pytest → ruff → ty → lint-imports → coverage floor
 ```
 
-Tests that touch the PyO3 extension skip cleanly when the `.so`
-isn't built; the wire codec, bindings table, and surface artifact
-tests run extension-free.
+`scripts/gate.py` is a stdlib runner over the dev toolchain; `ci.sh`
+is the gate entry.  Tests that touch the PyO3 extension skip cleanly
+when the `.so` isn't built; the wire codec, bindings table, and
+surface artifact tests run extension-free.
+
+## License
+
+MIT.
